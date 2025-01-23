@@ -1,0 +1,74 @@
+[
+    {
+        "email": "stringer",
+        "functional_head_email": "string",
+        "requirement": "string",
+        "copy_emails": "string",
+        "repo_name": "stringer",
+        "organization": "string",
+        "repo_type": "string",
+        "description": "string",
+        "teams": [
+            "string"
+        ],
+        "pr_protection": "string",
+        "enable_issues": "string",
+        "website_url": "string",
+        "topics": "string",
+        "cicd_requirement": "string",
+        "job_type": "string",
+        "group_id": "string",
+        "devops_org": "string",
+        "devops_project": "string",
+        "timestamp": "2025-01-21T15:32:46.985874",
+        "approval_state": "Approved"
+    },
+    {
+        "email": "string",
+        "functional_head_email": "string",
+        "requirement": "string",
+        "copy_emails": "string",
+        "repo_name": "string",
+        "organization": "string",
+        "repo_type": "string",
+        "description": "string",
+        "teams": [
+            "string"
+        ],
+        "pr_protection": "string",
+        "enable_issues": "string",
+        "website_url": "string",
+        "topics": "string",
+        "cicd_requirement": "string",
+        "job_type": "string",
+        "group_id": "string",
+        "devops_org": "string",
+        "devops_project": "string",
+        "timestamp": "2025-01-21T15:33:04.026352",
+        "approval_state": "Pending"
+    },
+    {
+        "email": "akindu@wso2.com",
+        "functional_head_email": "Open Banking",
+        "requirement": "hello",
+        "copy_emails": "akindu@wso2.com",
+        "repo_name": "tell",
+        "organization": "wso2",
+        "repo_type": "Public",
+        "description": "ererer",
+        "teams": [
+            "APIM"
+        ],
+        "pr_protection": "Default Branch protection Rules",
+        "enable_issues": "Yes",
+        "website_url": "ww",
+        "topics": "ww",
+        "cicd_requirement": "Jenkins Job",
+        "job_type": "product-*",
+        "group_id": "22",
+        "devops_org": "qq",
+        "devops_project": "qq",
+        "timestamp": "2025-01-22T15:34:24.992208",
+        "approval_state": "Approved"
+    }
+]

@@ -1,23 +1,20 @@
 import streamlit as st
 import requests
 
-# FastAPI URL for creating repositories
-FASTAPI_URL = "http://127.0.0.1:8000/create_repo"  # Replace with actual backend URL if deployed
+FASTAPI_URL = "http://127.0.0.1:8000"
+CREATE_REQUEST_URL = f"{FASTAPI_URL}/create_request"
+GET_REQUESTS_URL = f"{FASTAPI_URL}/requests"
+APPROVE_REQUEST_URL = f"{FASTAPI_URL}/approve_request"
 
-# Sidebar with two buttons for page selection
-normal_page_button = st.sidebar.button("Normal Page")
-admin_page_button = st.sidebar.button("Admin Page")
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "Normal Page"
 
-# Default to Normal Page if no button is pressed
-if normal_page_button:
-    page = "Normal Page"
-elif admin_page_button:
-    page = "Admin Page"
-else:
-    page = "Normal Page"  # Default to normal page if neither button is clicked
+if st.sidebar.button("Normal Page"):
+    st.session_state.current_page = "Normal Page"
+if st.sidebar.button("Admin Page"):
+    st.session_state.current_page = "Admin Page"
 
-# Normal Page
-if page == "Normal Page":
+if st.session_state.current_page == "Normal Page":
     st.title("New Github Repository Request")
 
     with st.form(key='new_repo_form'):
@@ -65,7 +62,6 @@ if page == "Normal Page":
         submit_button = st.form_submit_button(label="Submit Request")
 
     if submit_button:
-        # Check if required fields are filled
         if repo_name and description and functional_head_email and org:
             payload = {
                 "email": email,
@@ -82,14 +78,14 @@ if page == "Normal Page":
                 "website_url": website_url,
                 "topics": topics,
                 "cicd_requirement": cicd_requirement,
-                "job_type": job_type if cicd_requirement == "Jenkins Job" else None,
-                "group_id": group_id if cicd_requirement == "Jenkins Job" else None,
-                "devops_org": devops_org if cicd_requirement == "Azure Pipeline" else None,
-                "devops_project": devops_project if cicd_requirement == "Azure Pipeline" else None
+                "job_type": job_type, #if cicd_requirement == "Jenkins Job" else None,
+                "group_id": group_id, #if cicd_requirement == "Jenkins Job" else None,
+                "devops_org": devops_org, #if cicd_requirement == "Azure Pipeline" else None,
+                "devops_project": devops_project #if cicd_requirement == "Azure Pipeline" else None
             }
 
             # Send request to FastAPI backend
-            response = requests.post(FASTAPI_URL, json=payload)
+            response = requests.post(CREATE_REQUEST_URL, json=payload)
 
             if response.status_code == 200:
                 st.success(response.json().get("message", "Repository request created successfully"))
@@ -99,10 +95,28 @@ if page == "Normal Page":
             st.error("Please fill out all required fields.")
 
 # Admin Page
-elif page == "Admin Page":
+elif st.session_state.current_page == "Admin Page":
     st.title("Admin Page")
-    st.write("Welcome to the Admin Page!")
-    st.write("You can add more admin-specific functionalities here, such as managing repository requests, approving requests, or viewing request logs.")
-    # Example Admin functionality: Displaying requests
-    # You can implement features like showing requests from a database or table.
-    st.write("Here, you can manage repository requests, review them, and take actions.")
+    st.write("View and approve requests.")
+
+    response = requests.get(GET_REQUESTS_URL)
+    if response.status_code == 200:
+        requests_list = response.json()
+        for req in requests_list:
+            st.write(f"### {req['repo_name']}")
+            st.write(f"Email: {req['email']}")
+            st.write(f"Requirement: {req['requirement']}")
+            st.write(f"Timestamp: {req['timestamp']}")
+            st.write(f"Approval State: {req['approval_state']}")
+            if req["approval_state"] == "Pending":
+                if st.button(f"Approve {req['repo_name']}",key=f"approve_{req['timestamp']}"):
+                    approve_response = requests.post(f"{APPROVE_REQUEST_URL}/{req['repo_name']}")
+                    if approve_response.status_code == 200:
+                        st.success(f"Request for {req['repo_name']} approved!")
+                        st.experimental_rerun()
+                    else:
+                        st.error(f"Failed to approve {req['repo_name']}.")
+            st.markdown("---")  # Horizontal line separator
+    else:
+        st.error("Failed to fetch requests.")
+

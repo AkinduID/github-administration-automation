@@ -1,6 +1,21 @@
 import requests
 import json
 
+# Create a new repository in the organization
+# Data to be sent as JSON payload
+# name : repo_name, 
+# description : repo_desc, 
+# private : true of false, 
+# team_id : 1234 (list teams and get the id for relevent teams)
+# has_wiki : false (default)
+# auto_init : true (default)
+# gitignore_template : Java (default)
+# license_template : apache-2.0 (default)
+
+# More data to be sent as JSON payload
+# has_issues
+# homepage
+
 def create_repo(organization, repo_name, repo_desc, private, group_id, token):
     url = f"https://api.github.com/orgs/{organization}/repos"
     headers = {

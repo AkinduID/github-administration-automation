@@ -1,22 +1,25 @@
 import requests
 import json
 
+# Function Description: Create a new repository in the organization
+
+# ToDO
+# remove team id from the payload done. create separate function in set_infra_teams.py file
+# add url to payload done. set if given else ignore
+
 # Create a new repository in the organization
 # Data to be sent as JSON payload
-# name : repo_name, 
-# description : repo_desc, 
-# private : true of false, 
-# team_id : 1234 (list teams and get the id for relevent teams)
+# name : repo_name
+# description : repo_desc
+# private : true of false
+# homepage: website_url (optional)
+# has_issues: enable_issues
 # has_wiki : false (default)
 # auto_init : true (default)
 # gitignore_template : Java (default)
 # license_template : apache-2.0 (default)
 
-# More data to be sent as JSON payload
-# has_issues
-# homepage
-
-def create_repo(organization, repo_name, repo_desc, private, group_id, token):
+def create_repo(organization, repo_name, repo_desc, private, enable_issues,website_url, token):
     url = f"https://api.github.com/orgs/{organization}/repos"
     headers = {
         "Authorization": f"token {token}",
@@ -27,7 +30,9 @@ def create_repo(organization, repo_name, repo_desc, private, group_id, token):
         "name": repo_name,
         "description": repo_desc,
         "private": private,
-        "team_id": group_id,
+        "homepage": website_url, #optional
+        "has_issues": enable_issues,
+        # default values
         "has_wiki": False,
         "auto_init": True,
         "gitignore_template": "Java",

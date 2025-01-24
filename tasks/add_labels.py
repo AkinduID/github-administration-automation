@@ -1,21 +1,63 @@
 import requests
 import json
 
-def add_labels(repo_name, labels, token):
-    url = f"https://api.github.com/repos/{repo_name}/labels"
+# Function Description: Defines Labels for the repository
+# Parameters:
+#     repo (str): The repository in the format 'owner/repo'.
+#     token (str): Personal access token for GitHub authentication.
+#     labels (list): A list of dictionaries where each dictionary contains 'name' and 'color' keys.
+
+# ToDO
+
+Labels = [
+        # Type labels
+        {"name": "Type/Bug", "color": "1d76db"},
+        {"name": "Type/New Feature", "color": "1d76db"},
+        {"name": "Type/Epic", "color": "1d76db"},
+        {"name": "Type/Improvement", "color": "1d76db"},
+        {"name": "Type/Task", "color": "1d76db"},
+        {"name": "Type/UX", "color": "1d76db"},
+        {"name": "Type/Question", "color": "1d76db"},
+        {"name": "Type/Docs", "color": "1d76db"},
+
+        # Severity labels
+        {"name": "Severity/Blocker", "color": "b60205"},
+        {"name": "Severity/Critical", "color": "b60205"},
+        {"name": "Severity/Major", "color": "b60205"},
+        {"name": "Severity/Minor", "color": "b60205"},
+        {"name": "Severity/Trivial", "color": "b60205"},
+
+        # Priority labels
+        {"name": "Priority/Highest", "color": "ff9900"},
+        {"name": "Priority/High", "color": "ff9900"},
+        {"name": "Priority/Normal", "color": "ff9900"},
+        {"name": "Priority/Low", "color": "ff9900"},
+
+        # Resolution labels
+        {"name": "Resolution/Fixed", "color": "93c47d"},
+        {"name": "Resolution/Won’t Fix", "color": "93c47d"},
+        {"name": "Resolution/Duplicate", "color": "93c47d"},
+        {"name": "Resolution/Cannot Reproduce", "color": "93c47d"},
+        {"name": "Resolution/Not a bug", "color": "93c47d"},
+        {"name": "Resolution/Invalid", "color": "93c47d"},
+        {"name": "Resolution/Postponed", "color": "93c47d"},
+    ]
+
+def add_labels_to_repo(repo, token, labels=Labels):
+    url = f"https://api.github.com/repos/{repo}/labels"
     headers = {
         "Authorization": f"token {token}",
-        "Content-Type": "application/json"
+        "Accept": "application/vnd.github+json",
     }
-
-    results = []
     for label in labels:
-        response = requests.post(url, headers=headers, data=json.dumps(label))
+        response = requests.post(url, headers=headers, json=label)
         if response.status_code == 201:
-            results.append(f"Label '{label['name']}' created successfully")
+            print(f"Label '{label['name']}' created successfully.")
+        elif response.status_code == 422:
+            print(f"Label '{label['name']}' already exists.")
         else:
-            results.append(f"Failed to create label '{label['name']}': {response.status_code} - {response.text}")
-    return results
+            print(f"Failed to create label '{label['name']}': {response.status_code}, {response.text}")
+
 
 
 # 1. Type Labels

@@ -37,23 +37,14 @@ Currently The Organization https://github.com/Akindu-ID/ is used to test the pro
 ## 4. Repo Creation Process
 
 * List all teams in the organization (Run Once)
-
 * Get PAT for Org
-
 * Create a new repository in the organization (ask how it works when multiple teams are involved)
-
 * Add Topics (Optional)
-
 * Add Labels
-
 * Add Issue Template if Issues are enabled
-
 * Add PR Template
-
 * Add Branch Protection Rules
-
 * Set Infra Team Permissions
-
 
 # Current Technologies
 * Python (for rapid prototyping)

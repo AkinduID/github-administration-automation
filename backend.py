@@ -10,7 +10,7 @@ REQUESTS_FILE = "repo_requests.json"
 app = FastAPI()
 
 GITHUB_TOKEN = "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"
-GITHUB_API_URL = "https://api.github.com/orgs/Akindu-ID/repos"
+# GITHUB_API_URL = "https://api.github.com/orgs/Akindu-ID/repos"
 
 class RepoRequest(BaseModel): 
     # General
@@ -21,7 +21,7 @@ class RepoRequest(BaseModel):
     # Data required for repo creation process
     repo_name: str
     organization: str
-    repo_type: bool
+    repo_type: bool #false - public, true - private
     description: str
     teams: list
     pr_protection: str
@@ -74,7 +74,9 @@ def approve_request(repo_name: str):
 
             try:
                 repo_name = request["repo_name"]
+                repo_name = repo_name.replace(" ", "-")
                 organization = request["organization"]
+                organization = organization.replace(" ", "-")
                 repo_type = request["repo_type"]
                 description = request["description"]
                 pr_protection = request["pr_protection"]

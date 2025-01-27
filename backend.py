@@ -96,6 +96,7 @@ def approve_request(repo_name: str):
                 write_requests(requests_list)          
             except Exception as e:
                 raise HTTPException(status_code=500, detail=f"Repository creation failed: {str(e)}")
+            break
             
     if not request_exists:
         raise HTTPException(status_code=404, detail="Request not found")

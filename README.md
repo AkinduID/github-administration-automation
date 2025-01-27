@@ -14,8 +14,8 @@ Currently The Organization https://github.com/Akindu-ID/ is used to test the pro
 ### general
 * Email
 * Functional head email
-* Requirementmail 
-* cc list
+* Requirement
+* mail cc list
 ### Required for repo creation
 * repo name
 * oraganization

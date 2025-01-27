@@ -41,6 +41,7 @@ def create_repo(organization, repo_name, repo_desc, private, enable_issues,websi
 
     response = requests.post(url, headers=headers, data=json.dumps(data))
     if response.status_code == 201:
+        print("Repository created successfully.")
         return response.json()
     else:
         raise Exception(f"Failed to create repository: {response.status_code} - {response.text}")

@@ -23,11 +23,11 @@ def add_topics(org, repo, topics, token):
         print(f"Failed to update topics. Status code: {response.status_code}")
         print(response.json())
 
-GITHUB_TOKEN = "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"
+# GITHUB_TOKEN = "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"
 
-# Test the function
-if __name__ == "__main__":
-    owner = "Akindu-ID"
-    repo = "test-repo-27"
-    topics = ["topic1", "topic2"]
-    add_topics(owner, repo, topics, GITHUB_TOKEN)
+# # Test the function
+# if __name__ == "__main__":
+#     owner = "Akindu-ID"
+#     repo = "test-repo-27"
+#     topics = ["topic1", "topic2"]
+#     add_topics(owner, repo, topics, GITHUB_TOKEN)

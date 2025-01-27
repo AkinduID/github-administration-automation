@@ -69,12 +69,12 @@ def add_issue_template(org,repo, token, branch="main"):
 
 GITHUB_TOKEN = "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"
 
-# Test the function
-if __name__ == "__main__":
-    org = "Akindu-ID"
-    repo = "test-repo-27"
-    try:
-        response = add_issue_template(org, repo, GITHUB_TOKEN)
-        print(response)
-    except Exception as e:
-        print(e)
+# # Test the function
+# if __name__ == "__main__":
+#     org = "Akindu-ID"
+#     repo = "test-repo-27"
+#     try:
+#         response = add_issue_template(org, repo, GITHUB_TOKEN)
+#         print(response)
+#     except Exception as e:
+#         print(e)

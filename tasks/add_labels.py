@@ -43,8 +43,8 @@ Labels = [
         {"name": "Resolution/Postponed", "color": "93c47d"},
     ]
 
-def add_labels_to_repo(repo, token, labels=Labels):
-    url = f"https://api.github.com/repos/{repo}/labels"
+def add_labels(org, repo, token, labels=Labels):
+    url = f"https://api.github.com/repos/{org}/{repo}/labels"
     headers = {
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github+json",
@@ -58,12 +58,13 @@ def add_labels_to_repo(repo, token, labels=Labels):
         else:
             print(f"Failed to create label '{label['name']}': {response.status_code}, {response.text}")
 
-# GITHUB_TOKEN = "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"
+GITHUB_TOKEN = "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"
 
-# # Test the function
-# if __name__ == "__main__":
-#     repo = "Akindu-ID/test-repo-15"
-#     add_labels_to_repo(repo, GITHUB_TOKEN)
+# Test the function
+if __name__ == "__main__":
+    org = "Akindu-ID"
+    repo = "test-repo-27"
+    add_labels(org, repo, GITHUB_TOKEN)
 
 # 1. Type Labels
 # Type/Bug: Identifies a bug in the project. Color: #1d76db

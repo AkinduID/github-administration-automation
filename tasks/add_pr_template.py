@@ -13,8 +13,8 @@ import base64
 # token : Personal access token for GitHub authentication
 # branch : The branch to which the template is added (default: 'master')
 
-def add_pr_template(repo, token, branch="main"):
-    url = f"https://api.github.com/repos/{repo}/contents/pull_request_template.md"
+def add_pr_template(org,repo, token, branch="main"):
+    url = f"https://api.github.com/repos/{org}/{repo}/contents/pull_request_template.md"
     headers = {
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github+json"
@@ -104,13 +104,14 @@ def add_pr_template(repo, token, branch="main"):
 # response = add_pr_template("username/repository", "personal_access_token")
 # print(response)
 
-# GITHUB_TOKEN = "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"
+GITHUB_TOKEN = "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"
 
-# # Test the function
-# if __name__ == "__main__":
-#     repo = "Akindu-ID/test-repo-15"
-#     try:
-#         response = add_pr_template(repo, GITHUB_TOKEN)
-#         print(response)
-#     except Exception as e:
-#         print(e)
+# Test the function
+if __name__ == "__main__":
+    org = "Akindu-ID"
+    repo = "test-repo-27"
+    try:
+        response = add_pr_template(org, repo, GITHUB_TOKEN)
+        print(response)
+    except Exception as e:
+        print(e)

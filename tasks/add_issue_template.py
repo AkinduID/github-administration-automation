@@ -62,6 +62,18 @@ def add_issue_template(repo, token, branch="main"):
     response = requests.put(url, headers=headers, json=data)
 
     if response.status_code == 201:
+        print("Issue template added successfully.")
         return response.json()
     else:
         raise Exception(f"Failed to add issue template: {response.status_code}, {response.json()}")
+
+# GITHUB_TOKEN = "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"
+
+# # Test the function
+# if __name__ == "__main__":
+#     repo = "Akindu-ID/test-repo-15"
+#     try:
+#         response = add_issue_template(repo, GITHUB_TOKEN)
+#         print(response)
+#     except Exception as e:
+#         print(e)

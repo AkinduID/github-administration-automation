@@ -1,11 +1,13 @@
 import requests
 
 #branch protection option 1
-def protect_main_branch(repo, access_token):
-    url = f"https://api.github.com/repos/{repo}/branches/main/protection" #check for url validity
+def protect_main_branch(org, repo, access_token):
+    url = f"https://api.github.com/repos/{org}/{repo}/branches/main/protection" #check for url validity
     headers = {
-        "Accept": "application/vnd.github.loki-preview",
+        "Authorization": f"token {access_token}",
+        "Accept": "application/vnd.github.loki-preview"
     }
+
     data = {
         "required_status_checks": None,
         "enforce_admins": None,
@@ -26,7 +28,7 @@ def protect_main_branch(repo, access_token):
         print(f"Failed to protect main branch: {response.status_code}, {response.text}")
 
 #branch protection option 2
-def update_repo_settings(org, repo, access_token):
+def protect_main_branch_bal(org, repo, access_token):
     url = f"https://api.github.com/repos/{org}/{repo}"
     headers = {
         "Authorization": f"token {access_token}",
@@ -43,3 +45,13 @@ def update_repo_settings(org, repo, access_token):
         print("Main branch protected for ballerina repo")
     else:
         print(f"Failed to update repo settings: {response.status_code}, {response.text}")
+
+# GITHUB_TOKEN = "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"
+
+
+
+# # Test the function
+# if __name__ == "__main__":
+#     org = "Akindu-ID"
+#     repo = "test14"
+#     protect_main_branch_bal(org, repo, GITHUB_TOKEN)

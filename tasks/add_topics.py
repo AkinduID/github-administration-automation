@@ -22,3 +22,12 @@ def update_github_repo_topics(token, owner, repo, topics):
     else:
         print(f"Failed to update topics. Status code: {response.status_code}")
         print(response.json())
+
+# GITHUB_TOKEN = "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"
+
+# # Test the function
+# if __name__ == "__main__":
+#     owner = "Akindu-ID"
+#     repo = "test-repo-15"
+#     topics = ["topic1", "topic2"]
+#     update_github_repo_topics(GITHUB_TOKEN, owner, repo, topics)

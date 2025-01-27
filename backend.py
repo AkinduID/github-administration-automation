@@ -65,6 +65,7 @@ def get_requests():
 @app.post("/approve_request/{repo_name}")
 def approve_request(repo_name: str):
     requests_list = read_requests()
+    request_exists = False
     for request in requests_list:
         if request["repo_name"] == repo_name:
             request_exists = True
@@ -80,14 +81,15 @@ def approve_request(repo_name: str):
                 enable_issues = request["enable_issues"]
                 website_url = request["website_url"]
                 topics = request["topics"]
+                print(repo_name, organization, repo_type, description, pr_protection, enable_issues, website_url, topics)
                 create_repo(organization, repo_name, description, repo_type, enable_issues, website_url, GITHUB_TOKEN)
                 if request["topics"]:
                    print(topics)
                    add_topics(organization, repo_name, topics, GITHUB_TOKEN)
-                #add_labels(organization, repo_name, GITHUB_TOKEN)
-                #add_issue_template(organization, repo_name, GITHUB_TOKEN)
-                #add_pr_template(organization, repo_name, GITHUB_TOKEN)
-                #add_branch_protection(organization, repo_name, GITHUB_TOKEN)  
+                add_labels(organization, repo_name, GITHUB_TOKEN)
+                add_issue_template(organization, repo_name, GITHUB_TOKEN)
+                add_pr_template(organization, repo_name, GITHUB_TOKEN)
+                add_branch_protection(organization, repo_name, GITHUB_TOKEN)  
                 request["approval_state"] = "Approved"
                 write_requests(requests_list)          
             except Exception as e:

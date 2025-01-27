@@ -38,10 +38,10 @@ Currently The Organization https://github.com/Akindu-ID/ is used to test the pro
 
 * List all teams in the organization (Run Once)
 * Get PAT for Org
-* Create a new repository in the organization (ask how it works when multiple teams are involved)
+* Create a new repository in the organization
 * Add Topics (Optional)
 * Add Labels
-* Add Issue Template if Issues are enabled
+* Add Issue Template
 * Add PR Template
 * Add Branch Protection Rules
 * Set Infra Team Permissions

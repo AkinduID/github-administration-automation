@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import requests
 from datetime import datetime
 import json
+from functions import create_repo, add_topics, add_labels, add_issue_template, add_pr_template, add_branch_protection, set_infra_team_permissions
 
 REQUESTS_FILE = "repo_requests.json"
 
@@ -12,20 +13,23 @@ GITHUB_TOKEN = "github_pat_11ASI4K4Q0J3t7NO7Z4qLU_OjTMVeL5KYEx8kcVuCC9FK829ZiwNd
 GITHUB_API_URL = "https://api.github.com/orgs/Akindu-ID/repos"
 
 class RepoRequest(BaseModel): 
+    # General
     email: str
     functional_head_email: str
     requirement: str
     copy_emails: str
+    # Data required for repo creation process
     repo_name: str
     organization: str
-    repo_type: str
+    repo_type: bool
     description: str
     teams: list
     pr_protection: str
-    enable_issues: str
+    enable_issues: bool
     website_url: str
-    topics: list
+    topics: list 
     cicd_requirement: str
+    # DevOps
     job_type: str #= None
     group_id: str #= None
     devops_org: str #= None
@@ -63,45 +67,31 @@ def approve_request(repo_name: str):
     requests_list = read_requests()
     for request in requests_list:
         if request["repo_name"] == repo_name:
+            request_exists = True
             if request["approval_state"] != "Pending":
                 raise HTTPException(status_code=400, detail="Request is already processed")
 
-            request["approval_state"] = "Approved"
-            write_requests(requests_list)
-
-            headers = {"Authorization": f"token {GITHUB_TOKEN}"}
-            payload = {
-                "name": request["repo_name"],
-                "description": request["description"],
-                "private": True if request["repo_type"] == "Private" else False,
-                "homepage": request["website_url"] if request["website_url"] else None,
-                "topics": request["topics"] if request["topics"] else [], # need a separate function for this
-                "has_issues": True if request["enable_issues"] == "Yes" else False,
-            }
-
-            response = requests.post(GITHUB_API_URL, json=payload, headers=headers)
-
-            if response.status_code == 201:
-                repo_url = response.json().get('url')  # Get the repo URL to set branch protection
-                if request["pr_protection"]:
-                    # Call GitHub API to set branch protection based on request['pr_protection']
-                    protection_payload = {
-                        "required_status_checks": {"strict": True, "contexts": []},
-                        "enforce_admins": False,
-                        "required_pull_request_reviews": {"dismiss_stale_reviews": True, "require_code_owner_reviews": False},
-                        "restrictions": None
-                    }
-                    protection_url = f"{repo_url}/branches/main/protection"
-                    protection_response = requests.put(protection_url, json=protection_payload, headers=headers)
-                    
-                    if protection_response.status_code != 200:
-                        return {"error": f"Failed to apply branch protection: {protection_response.json()}"}
-
-                return {"message": f"Repository '{repo_name}' approved and created successfully!"}
-            else:
-                # Roll back approval if GitHub creation fails
-                request["approval_state"] = "Pending"
-                write_requests(requests_list)
-                return {"error": response.json()}
-
-    raise HTTPException(status_code=404, detail="Request not found")
+            try:
+                repo_name = request["repo_name"]
+                organization = request["organization"]
+                repo_type = request["repo_type"]
+                description = request["description"]
+                pr_protection = request["pr_protection"]
+                enable_issues = request["enable_issues"]
+                website_url = request["website_url"]
+                topics = request["topics"]
+                create_repo(organization, repo_name, description, repo_type, enable_issues, website_url, GITHUB_TOKEN)
+                if request["topics"]:
+                   print(topics)
+                   add_topics(organization, repo_name, topics, GITHUB_TOKEN)
+                #add_labels(organization, repo_name, GITHUB_TOKEN)
+                #add_issue_template(organization, repo_name, GITHUB_TOKEN)
+                #add_pr_template(organization, repo_name, GITHUB_TOKEN)
+                #add_branch_protection(organization, repo_name, GITHUB_TOKEN)  
+                request["approval_state"] = "Approved"
+                write_requests(requests_list)          
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=f"Repository creation failed: {str(e)}")
+            
+    if not request_exists:
+        raise HTTPException(status_code=404, detail="Request not found")

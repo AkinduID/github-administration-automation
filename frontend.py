@@ -1,6 +1,9 @@
 import streamlit as st
 import requests
 
+# ToDo
+# format the inpout data in payload to match the backend model
+
 FASTAPI_URL = "http://127.0.0.1:8000"
 CREATE_REQUEST_URL = f"{FASTAPI_URL}/create_request"
 GET_REQUESTS_URL = f"{FASTAPI_URL}/requests"
@@ -70,11 +73,11 @@ if st.session_state.current_page == "Normal Page":
                 "copy_emails": copy_emails,
                 "repo_name": repo_name,
                 "organization": org,
-                "repo_type": repo_type,
+                "repo_type": repo_type, #true if "Private" false if "Public", bool
                 "description": description,
                 "teams": teams,
-                "pr_protection": pr_protection,
-                "enable_issues": enable_issues,
+                "pr_protection": pr_protection, #true if "Default Branch protection Rules" false if "Ballerina Library Repo Branch Protection Rules", bool
+                "enable_issues": enable_issues, #true if "Yes" false if "No", bool
                 "website_url": website_url,
                 "topics": topics,
                 "cicd_requirement": cicd_requirement,

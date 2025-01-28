@@ -1,30 +1,62 @@
 import requests
 import json
 
-def get_team_ids(org,token):
+import requests
+import json
+
+# Function Description: Get the team IDs in an organization and save the data in a JSON file
+
+FILE_NAME = "teams_data.json"
+
+def get_team_ids(org, token):
     url = f"https://api.github.com/orgs/{org}/teams"
     headers = {
         "Accept": "application/vnd.github+json",
         "Authorization": f"Bearer {token}",
         "X-GitHub-Api-Version": "2022-11-28"
     }
+    
     response = requests.get(url, headers=headers)
+    
     if response.status_code == 200:
         teams_data = response.json()
+        
+        # Restructure the data as per the required JSON format
+        grouped_data = {}
+        for team in teams_data:
+            lab_name = org
+            team_entry = {
+                "name": team.get("name"),
+                "id": team.get("id")
+            }
+
+            if lab_name not in grouped_data:
+                grouped_data[lab_name] = []
+
+            grouped_data[lab_name].append(team_entry)
+
+        final_output = [
+            {"name": lab, "teams": teams}
+            for lab, teams in grouped_data.items()
+        ]
+        
+        try:
+            with open(FILE_NAME, "r") as file:
+                existing_data = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            existing_data = []
+
+        existing_data.extend(final_output)
+
         with open(FILE_NAME, "w") as file:
-            json.dump(teams_data, file, indent=4)
-            print(f"Teams data saved to {FILE_NAME}")
+            json.dump(existing_data, file, indent=4)
+
+        print(f"Formatted teams data appended to {FILE_NAME}")
     else:
         print(f"Failed to fetch teams. Status code: {response.status_code}")
         exit(1)
-    with open(FILE_NAME, "r") as file:
-        teams_data = json.load(file)
 
-    filtered_data = [{"name": team.get("name"), "id": team.get("id")} for team in teams_data]
-    with open(FILE_NAME, "w") as file:
-        json.dump(filtered_data, file, indent=4)
 
-    print("Completed listing team IDs!")
 
 
 # Configuration

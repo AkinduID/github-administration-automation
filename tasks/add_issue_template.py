@@ -22,26 +22,26 @@ def add_issue_template(org,repo, token, branch="main"):
 
     # Issue template content
     content = """
-    **Description:**
-    <!-- Give a brief description of the issue -->
+**Description:**
+<!-- Give a brief description of the issue -->
 
-    **Suggested Labels:**
-    <!-- Optional comma separated list of suggested labels. Non committers can't assign labels to issues, so this will help issue creators who are not a committer to suggest possible labels-->
+**Suggested Labels:**
+<!-- Optional comma separated list of suggested labels. Non committers can't assign labels to issues, so this will help issue creators who are not a committer to suggest possible labels-->
 
-    **Suggested Assignees:**
-    <!--Optional comma separated list of suggested team members who should attend the issue. Non committers can't assign issues to assignees, so this will help issue creators who are not a committer to suggest possible assignees-->
+**Suggested Assignees:**
+<!--Optional comma separated list of suggested team members who should attend the issue. Non committers can't assign issues to assignees, so this will help issue creators who are not a committer to suggest possible assignees-->
 
-    **Affected Product Version:**
+**Affected Product Version:**
 
-    **OS, DB, other environment details and versions:**    
+**OS, DB, other environment details and versions:**    
 
-    **Steps to reproduce:**
+**Steps to reproduce:**
 
 
-    **Related Issues:**
-    <!-- Any related issues such as sub tasks, issues reported in other repositories (e.g component repositories), similar problems, etc. -->
+**Related Issues:**
+<!-- Any related issues such as sub tasks, issues reported in other repositories (e.g component repositories), similar problems, etc. -->
 
-    """
+"""
 
     # Encode the content in Base64
     encoded_content = base64.b64encode(content.encode()).decode()

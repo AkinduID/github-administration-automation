@@ -3,14 +3,14 @@ from pydantic import BaseModel
 import requests
 from datetime import datetime
 import json
-from functions import create_repo, add_topics, add_labels, add_issue_template, add_pr_template, add_branch_protection, add_branch_protection_bal,set_infra_team_permissions,get_pat
+from functions import create_repo, add_topics, add_labels, add_issue_template, add_pr_template, add_branch_protection, add_branch_protection_bal,set_team_permissions,get_pat
 
 # ToDo
 # infra teams permission function
-# create multiple org in github and create pats for each org
-# create teams in each repo
-# add ability to handle multiple organizatiomns and multipel pat
-# create get pat fuction
+# [x]create multiple org in github and create pats for each org
+# [x]create teams in each repo 
+# [x]add ability to handle multiple organizatiomns and multipel pat
+# [x]create get pat fuction
 
 REQUESTS_FILE = "repo_requests.json"
 

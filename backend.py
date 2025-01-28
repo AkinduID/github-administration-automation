@@ -91,6 +91,7 @@ def approve_request(repo_name: str):
                 enable_issues = request["enable_issues"]
                 website_url = request["website_url"]
                 topics = request["topics"]
+                teams=request["teams"] #list
                 print(repo_name, organization, repo_type, description, pr_protection, enable_issues, website_url, topics)
                 create_repo(organization, repo_name, description, repo_type, enable_issues, website_url, GITHUB_TOKEN)
                 if request["topics"]:
@@ -103,6 +104,8 @@ def approve_request(repo_name: str):
                     add_branch_protection(organization, repo_name, GITHUB_TOKEN)
                 else:
                     add_branch_protection_bal(organization, repo_name, GITHUB_TOKEN) 
+                for team in teams:
+                    set_team_permissions(organization, repo_name, team, GITHUB_TOKEN) #issue with input parameters
                 request["approval_state"] = "Approved"
                 write_requests(requests_list)          
             except Exception as e:

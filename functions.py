@@ -7,10 +7,11 @@ from tasks.add_issue_template import add_issue_template
 from tasks.add_pr_template import add_pr_template
 from tasks.add_branch_protection import add_branch_protection
 from tasks.set_infra_team_permissions import set_infra_team_permissions
+from tasks.get_pat import get_pat
 
 
 # Export all functions in a single namespace
-__all__ = ["list_teams","get_pat", "create_repo", "add_topics","add_labels","add_issue_template","add_pr_template","add_branch_protection","set_infra_team_permissions"]
+__all__ = ["list_teams","get_pat", "create_repo", "add_topics","add_labels","add_issue_template","add_pr_template","add_branch_protection","set_infra_team_permissions","get_pat"]
 
 
 # Repo Creation Flow

@@ -3,13 +3,20 @@ from pydantic import BaseModel
 import requests
 from datetime import datetime
 import json
-from functions import create_repo, add_topics, add_labels, add_issue_template, add_pr_template, add_branch_protection, set_infra_team_permissions
+from functions import create_repo, add_topics, add_labels, add_issue_template, add_pr_template, add_branch_protection, add_branch_protection_bal,set_infra_team_permissions,get_pat
+
+# ToDo
+# infra teams permission function
+# create multiple org in github and create pats for each org
+# create teams in each repo
+# add ability to handle multiple organizatiomns and multipel pat
+# create get pat fuction
 
 REQUESTS_FILE = "repo_requests.json"
 
 app = FastAPI()
 
-GITHUB_TOKEN = "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"
+# GITHUB_TOKEN = "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"
 # GITHUB_API_URL = "https://api.github.com/orgs/Akindu-ID/repos"
 
 class RepoRequest(BaseModel): 
@@ -24,7 +31,7 @@ class RepoRequest(BaseModel):
     repo_type: bool #false - public, true - private
     description: str
     teams: list
-    pr_protection: str
+    pr_protection: bool
     enable_issues: bool
     website_url: str
     topics: list 
@@ -77,6 +84,7 @@ def approve_request(repo_name: str):
                 repo_name = repo_name.replace(" ", "-")
                 organization = request["organization"]
                 organization = organization.replace(" ", "-")
+                GITHUB_TOKEN = get_pat(organization)
                 repo_type = request["repo_type"]
                 description = request["description"]
                 pr_protection = request["pr_protection"]
@@ -91,7 +99,10 @@ def approve_request(repo_name: str):
                 add_labels(organization, repo_name, GITHUB_TOKEN)
                 add_issue_template(organization, repo_name, GITHUB_TOKEN)
                 add_pr_template(organization, repo_name, GITHUB_TOKEN)
-                add_branch_protection(organization, repo_name, GITHUB_TOKEN)  
+                if pr_protection == "true":
+                    add_branch_protection(organization, repo_name, GITHUB_TOKEN)
+                else:
+                    add_branch_protection_bal(organization, repo_name, GITHUB_TOKEN) 
                 request["approval_state"] = "Approved"
                 write_requests(requests_list)          
             except Exception as e:

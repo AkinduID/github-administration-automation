@@ -104,8 +104,7 @@ def approve_request(repo_name: str):
                     add_branch_protection(organization, repo_name, GITHUB_TOKEN)
                 else:
                     add_branch_protection_bal(organization, repo_name, GITHUB_TOKEN) 
-                for team in teams:
-                    set_team_permissions(organization, repo_name, team, GITHUB_TOKEN) #issue with input parameters
+                set_team_permissions(organization, repo_name, teams, GITHUB_TOKEN) 
                 request["approval_state"] = "Approved"
                 write_requests(requests_list)          
             except Exception as e:

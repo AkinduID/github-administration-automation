@@ -10,19 +10,21 @@ import requests
 import json
 import requests
 
-def set_team_permissions(org, repo, token):
+def set_team_permissions(org, repo, token, teams):
     # Read the JSON file
     with open('tasks/teamid_list.json', 'r') as file:
         team_data = json.load(file)
     
-    # Extract team IDs for the given organization
+    # Extract team IDs for the specified teams in the given organization
     team_ids = []
     for lab in team_data:
         if lab['name'] == org:
-            team_ids.extend([team['id'] for team in lab['teams']])
-    
+            for team in lab['teams']:
+                if team['name'] in teams:
+                    team_ids.append(team['id'])
+    print(f"Team IDs: {team_ids}")
     if not team_ids:
-        print(f"No teams found for organization {org}")
+        print(f"No matching teams found in organization {org}")
         return
 
     # GitHub API base URL
@@ -34,8 +36,9 @@ def set_team_permissions(org, repo, token):
         "Accept": "application/vnd.github+json"
     }
 
-    # Grant permissions to each team
+    # Grant permissions to each specified team
     for team_id in team_ids:
+        print(f"Granting access to team ID {team_id} for repo {repo}")
         url = f"{api_base_url}/teams/{team_id}/repos/{org}/{repo}"
         payload = {
             "permission": "push"  # Possible values: pull, push, admin
@@ -49,7 +52,12 @@ def set_team_permissions(org, repo, token):
             print(f"Failed to grant access to team ID {team_id}. Error: {response.status_code}, {response.text}")
 
 # Example usage
-set_team_permissions("GitOpsLab-1", "test-repo-01", "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")
+# teams_list = ["GitOPsLabs 1 Team 1", "GitOPsLabs 1 Team 3"]
+# set_team_permissions("GitOpsLab-1", "example-repo", "your_github_token", teams_list)
+
+
+# Example usage
+set_team_permissions("GitOpsLab-1", "test-repo-01", "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",["GitOPsLabs 1 Team 1","GitOpsLabs 1 Team 2"])
 
 
 #Adding INFRA GROUP AND READONLY GROUP. Change the team id when different team.

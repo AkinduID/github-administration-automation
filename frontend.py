@@ -3,6 +3,7 @@ import requests
 
 # ToDo
 # format the inpout data in payload to match the backend model
+# add the demo data and change the frontend
 
 FASTAPI_URL = "http://127.0.0.1:8000"
 CREATE_REQUEST_URL = f"{FASTAPI_URL}/create_request"
@@ -30,20 +31,31 @@ if st.session_state.current_page == "Normal Page":
         requirement = st.text_area("Requirement *", help="Purpose of requesting this repo")
         copy_emails = st.text_input("Copy this email *", help="Comma separated list of emails/groups to inform")
         repo_name = st.text_input("Repo Name *", help="Help on repository naming conventions")
+        # org_options = [
+        #     "wso2", "wso2-support", "wso2-extensions", "wso2-incubator", 
+        #     "ballerina-platform", "ballerina-guides", "wso2-cellery", "siddhi-io", 
+        #     "wso2-enterprise", "asgardeo", "choreo-test-apps", "asgardeo-samples", "Other"
+        # ]
         org_options = [
-            "wso2", "wso2-support", "wso2-extensions", "wso2-incubator", 
-            "ballerina-platform", "ballerina-guides", "wso2-cellery", "siddhi-io", 
-            "wso2-enterprise", "asgardeo", "choreo-test-apps", "asgardeo-samples", "Other"
+            "GitOpsLabs-1", "GitOpsLabs-2", "GitOpsLabs-3", "GitOpsLabs-4", "GitOpsLabs-5"
         ]
         org = st.selectbox("Organization *", org_options)
-        repo_type = st.radio("Repo Type *", options=["Public", "Private"])
+        repo_type_input = st.radio("Repo Type *", options=["Public", "Private"])
         description = st.text_area("Description *", help="Short description to add to the repository's ABOUT section in GitHub")
+        # teams = st.multiselect(
+        #     "Team *", 
+        #     options=["Analytics", "APIM", "Ballerina", "Cellery", "Choreo", "Financial Solutions", "IAM", "Integration", "SRE / WUM", "Other"]
+        # )
         teams = st.multiselect(
             "Team *", 
-            options=["Analytics", "APIM", "Ballerina", "Cellery", "Choreo", "Financial Solutions", "IAM", "Integration", "SRE / WUM", "Other"]
+            options=["GitOPsLabs 1 Team 1", "GitOpsLabs 1 Team 2", "GitOpsLabs 1 Team 3", 
+                     "GitOpsLabs 2 Team 1", "GitOpsLabs 2 Team 2", "GitOpsLabs 2 Team 3", 
+                     "GitOpsLabs 3 Team 1", "GitOpsLabs 3 Team 2", "GitOpsLabs 3 Team 3",
+                     "GitOpsLabs 4 Team 1", "GitOpsLabs 4 Team 2", "GitOpsLabs 4 Team 3",
+                     "GitOpsLabs 5 Team 1", "GitOpsLabs 5 Team 2", "GitOpsLabs 5 Team 3"]
         )
-        pr_protection = st.radio("Add PR branch protection *", options=["Default Branch protection Rules", "'Ballerina Library' Repo Branch Protection Rules"], help="Select the type of branch protection required")
-        enable_issues = st.radio("Enable 'Issues' *", options=["Yes", "No"])
+        pr_protection_input = st.radio("Add PR branch protection *", options=["Default Branch protection Rules", "'Ballerina Library' Repo Branch Protection Rules"], help="Select the type of branch protection required")
+        enable_issues_input = st.radio("Enable 'Issues' *", options=["Yes", "No"])
         website_url = st.text_input("Website URL", help="Provide an URL with more information about the repository")
         topics = st.text_input("Topics", help="List topics to classify the repo")
 
@@ -66,6 +78,9 @@ if st.session_state.current_page == "Normal Page":
 
     if submit_button:
         if repo_name and description and functional_head_email and org:
+            repo_type = True if repo_type_input == "Private" else False
+            pr_protection = True if pr_protection_input == "Default Branch protection Rules" else False
+            enable_issues = True if enable_issues_input == "Yes" else False
             payload = {
                 "email": email,
                 "functional_head_email": functional_head_email,
@@ -79,14 +94,14 @@ if st.session_state.current_page == "Normal Page":
                 "pr_protection": pr_protection, #true if "Default Branch protection Rules" false if "Ballerina Library Repo Branch Protection Rules", bool
                 "enable_issues": enable_issues, #true if "Yes" false if "No", bool
                 "website_url": website_url,
-                "topics": topics,
+                "topics": topics.split(",") if topics else [],
                 "cicd_requirement": cicd_requirement,
                 "job_type": job_type, #if cicd_requirement == "Jenkins Job" else None,
                 "group_id": group_id, #if cicd_requirement == "Jenkins Job" else None,
                 "devops_org": devops_org, #if cicd_requirement == "Azure Pipeline" else None,
                 "devops_project": devops_project #if cicd_requirement == "Azure Pipeline" else None
             }
-
+            print(payload)
             # Send request to FastAPI backend
             response = requests.post(CREATE_REQUEST_URL, json=payload)
 

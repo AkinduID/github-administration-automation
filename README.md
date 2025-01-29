@@ -1,53 +1,68 @@
-# github-administration-automation
+# GitHub Administration Automation
 
-This Repo contains source code for the githib administration automation project.
-
-
-# Project Details
-This project aims to automate the repository creation process across different organizations.
-
-Currently The Organization https://github.com/Akindu-ID/ is used to test the project
-
-# Current Workflow
-
-## 1. User Inputs
-### general
-* Email
-* Functional head email
-* Requirement
-* mail cc list
-### Required for repo creation
-* repo name
-* oraganization
-* repo type boolean
-* description
-* team list
-* pr branch protection
-* enable issues boolean
-* website url
-* topics
-### DevOps
-* Jenkins
-* Azure
-* Not Applicable
+## Project Overview
+This project automates the creation of repositories within different organizations, reducing manual effort and ensuring consistency. Currently, the following organizations are used for testing.
+* [GitOpsLab-1](https://github.com/GitOpsLab-1)
 
 
-### Approve Request is Created. Admin reviews and Approves Request
+## Workflow
 
-## 4. Repo Creation Process
+### 1. User Inputs
+Users provide the following details before initiating the repository creation process:
 
-* List all teams in the organization (Run Once)
-* Get PAT for Org
-* Create a new repository in the organization
-* Add Topics (Optional)
-* Add Labels
-* Add Issue Template
-* Add PR Template
-* Add Branch Protection Rules
-* Set Infra Team Permissions
+#### General Information
+- **Email**
+- **Functional Head Email**
+- **Requirement**
+- **CC Email List**
 
-# Current Technologies
-* Python (for rapid prototyping)
-* FastAPI for Backend
-* Streamlit for Frontend
-* GitHub API
+#### Repository Details
+- **Repository Name**
+- **Organization Name**
+- **Repository Type (Public/Private)**
+- **Description**
+- **Team List**
+- **PR Branch Protection (Enabled/Disabled)**
+- **Enable Issues (Boolean)**
+- **Website URL**
+- **Topics**
+
+#### DevOps Integration
+- **Jenkins**
+- **Azure**
+- **Not Applicable**
+
+### 2. Approval Process
+Once a request is submitted, an approval request is generated. The administrator reviews and approves the request before proceeding.
+
+### 3. Repository Creation Process
+Once approved, the following automated steps take place:
+1. Retrieve the list of all teams in the organization (executed once per organization).
+2. Obtain a **Fine-Grained Personal Access Token (PAT)** for organization access.
+3. Create a new repository in the designated organization.
+4. Add topics (optional).
+5. Add predefined labels.
+6. Add issue templates.
+7. Add pull request templates.
+8. Configure branch protection rules.
+9. Set permissions for the Infra Team.
+
+## Technologies Used
+- **Python** (for rapid prototyping)
+- **FastAPI** (backend)
+- **Streamlit** (frontend)
+- **GitHub API** (for automation)
+
+## Access Requirements
+A **Fine-Grained Personal Access Token (PAT)** is required to interact with the GitHub API. The following permissions must be granted:
+
+### Repository Permissions
+- **Administration: Read & Write** → Required for repository creation and topic management.
+- **Content: Read & Write** → Needed to add issue templates and pull request templates.
+- **Pull Requests: Read & Write** → Required to add labels.
+
+### Organization Permissions
+- **Members: Read Only** → Required to fetch the list of teams within the organization.
+
+---
+This project simplifies and automates GitHub repository management, making it easier for teams to create and maintain repositories efficiently.

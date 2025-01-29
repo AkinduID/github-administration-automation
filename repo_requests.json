@@ -199,5 +199,60 @@
         "devops_project": "string",
         "timestamp": "2025-01-24T08:44:21.528430",
         "approval_state": "Approved"
+    },
+    {
+        "email": "string",
+        "functional_head_email": "string",
+        "requirement": "string",
+        "copy_emails": "string",
+        "repo_name": "test repo 23",
+        "organization": "GitOpsLab-1",
+        "repo_type": false,
+        "description": "TEST REPO DESCRIPTION",
+        "teams": [
+            "GitOPsLabs 1 Team 1"
+        ],
+        "pr_protection": true,
+        "enable_issues": true,
+        "website_url": "https://github.com",
+        "topics": [
+            "JAVA",
+            "PYTHON"
+        ],
+        "cicd_requirement": "string",
+        "job_type": "string",
+        "group_id": "string",
+        "devops_org": "string",
+        "devops_project": "string",
+        "timestamp": "2025-01-27T10:51:26.851267",
+        "approval_state": "Approved"
+    },
+    {
+        "email": "akindu@wso2.com",
+        "functional_head_email": "Integration",
+        "requirement": "Test",
+        "copy_emails": "we",
+        "repo_name": "test repo 25",
+        "organization": "GitOpsLab-1",
+        "repo_type": false,
+        "description": "test",
+        "teams": [
+            "GitOPsLabs 1 Team 1",
+            "GitOpsLabs 1 Team 2"
+        ],
+        "pr_protection": true,
+        "enable_issues": true,
+        "website_url": "https:/github.com",
+        "topics": [
+            "python",
+            "java"
+        ],
+        "cicd_requirement": "Jenkins Job",
+        "job_type": "product-*",
+        "group_id": "1",
+        "devops_org": "we",
+        "devops_project": "we",
+        "timestamp": "2025-01-29T15:26:27.469847",
+        "approval_state": "Approved"
     }
 ]

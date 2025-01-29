@@ -6,7 +6,7 @@ import json
 from functions import create_repo, add_topics, add_labels, add_issue_template, add_pr_template, add_branch_protection, add_branch_protection_bal,set_team_permissions,get_pat
 
 # ToDo
-# infra teams permission function
+# infra teams permission function partialy done.
 # [x]create multiple org in github and create pats for each org
 # [x]create teams in each repo 
 # [x]add ability to handle multiple organizatiomns and multipel pat
@@ -31,8 +31,8 @@ class RepoRequest(BaseModel):
     repo_type: bool #false - public, true - private
     description: str
     teams: list
-    pr_protection: bool
-    enable_issues: bool
+    pr_protection: bool #false - ballerina library repo branch protection rules, true - default branch protection rules
+    enable_issues: bool #false - disable issues, true - enable issues
     website_url: str
     topics: list 
     cicd_requirement: str
@@ -80,19 +80,19 @@ def approve_request(repo_name: str):
                 raise HTTPException(status_code=400, detail="Request is already processed")
 
             try:
-                repo_name = request["repo_name"]
+                repo_name = request["repo_name"] #string
                 repo_name = repo_name.replace(" ", "-")
-                organization = request["organization"]
+                organization = request["organization"] #string
                 organization = organization.replace(" ", "-")
-                GITHUB_TOKEN = get_pat(organization)
-                repo_type = request["repo_type"]
-                description = request["description"]
-                pr_protection = request["pr_protection"]
-                enable_issues = request["enable_issues"]
-                website_url = request["website_url"]
-                topics = request["topics"]
+                GITHUB_TOKEN = get_pat(organization) #string
+                repo_type = request["repo_type"] #bool: True - private, False - public
+                description = request["description"] #string
+                pr_protection = request["pr_protection"] #bool: True - default branch protection rules, False - ballerina library repo branch protection rules
+                enable_issues = request["enable_issues"] #bool: True - enable issues, False - disable issues
+                website_url = request["website_url"] 
+                topics = request["topics"] #list
                 teams=request["teams"] #list
-                print(repo_name, organization, repo_type, description, pr_protection, enable_issues, website_url, topics)
+                print(repo_name, organization, repo_type, description, pr_protection, enable_issues, website_url, topics, teams)
                 create_repo(organization, repo_name, description, repo_type, enable_issues, website_url, GITHUB_TOKEN)
                 if request["topics"]:
                    print(topics)
@@ -100,8 +100,8 @@ def approve_request(repo_name: str):
                 add_labels(organization, repo_name, GITHUB_TOKEN)
                 add_issue_template(organization, repo_name, GITHUB_TOKEN)
                 add_pr_template(organization, repo_name, GITHUB_TOKEN)
-                if pr_protection == "true":
-                    add_branch_protection(organization, repo_name, GITHUB_TOKEN)
+                if pr_protection == True:
+                    add_branch_protection(organization, repo_name, GITHUB_TOKEN) #cannot set for private repo
                 else:
                     add_branch_protection_bal(organization, repo_name, GITHUB_TOKEN) 
                 set_team_permissions(organization, repo_name, teams, GITHUB_TOKEN) 

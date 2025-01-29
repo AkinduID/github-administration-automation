@@ -8,14 +8,15 @@ import requests
 
 # ToDO
 # Test Function
-# Private branches cant be protected wihtout a pro account. Check for this condition and return an error message
+# Cannot apply protection to private repos without a pro account. Check for this condition
 
 #branch protection option 1
 def add_branch_protection(org, repo, access_token):
     url = f"https://api.github.com/repos/{org}/{repo}/branches/main/protection" #check for url validity
     headers = {
-        "Authorization": f"token {access_token}",
-        "Accept": "application/vnd.github.loki-preview"
+        "Authorization": f"Bearer {access_token}",
+        "Accept": "application/vnd.github+json"
+
     }
 
     data = {
@@ -56,12 +57,12 @@ def add_branch_protection(org, repo, access_token):
 #     else:
 #         print(f"Failed to update repo settings: {response.status_code}, {response.text}")
 
-# GITHUB_TOKEN = "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"
+# GITHUB_TOKEN = "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xx"
 
 
 
 # # Test the function
 # if __name__ == "__main__":
-#     org = "Akindu-ID"
-#     repo = "test-repo-25"
+#     org = "GitOpsLab-1"
+#     repo = "test-repo-13"
 #     add_branch_protection(org, repo, GITHUB_TOKEN)

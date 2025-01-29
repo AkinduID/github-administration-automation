@@ -10,7 +10,8 @@ import requests
 import json
 import requests
 
-def set_team_permissions(org, repo, token, teams):
+def set_team_permissions(org, repo, teams, token):
+    print(f"Setting permissions for teams {teams} in organization {org} for repo {repo}")
     # Read the JSON file
     with open('tasks/teamid_list.json', 'r') as file:
         team_data = json.load(file)
@@ -20,6 +21,7 @@ def set_team_permissions(org, repo, token, teams):
     for lab in team_data:
         if lab['name'] == org:
             for team in lab['teams']:
+                print(f"Team: {team['name']}") # Debugging
                 if team['name'] in teams:
                     team_ids.append(team['id'])
     print(f"Team IDs: {team_ids}")
@@ -54,10 +56,6 @@ def set_team_permissions(org, repo, token, teams):
 # Example usage
 # teams_list = ["GitOPsLabs 1 Team 1", "GitOPsLabs 1 Team 3"]
 # set_team_permissions("GitOpsLab-1", "example-repo", "your_github_token", teams_list)
-
-
-# Example usage
-set_team_permissions("GitOpsLab-1", "test-repo-01", "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",["GitOPsLabs 1 Team 1","GitOpsLabs 1 Team 2"])
 
 
 #Adding INFRA GROUP AND READONLY GROUP. Change the team id when different team.

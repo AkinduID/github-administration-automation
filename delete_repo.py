@@ -1,5 +1,8 @@
 import requests
 
+# Function Description: Delete all repositories in a GitHub organization
+# Created for Cleaning Test Organizations
+
 # Replace these with your details
 GITHUB_TOKEN = "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"
 ORG_NAME = "Akindu-ID"

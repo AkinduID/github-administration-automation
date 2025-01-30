@@ -25,7 +25,7 @@ def set_team_permissions(org, repo, teams, token):
             for team in lab['teams']:
                 print(f"Team: {team['name']}") # Debugging
                 if team['name'] in teams:
-                    team_ids.append(team['id'])
+                    team_ids.append((team['id'],team['name']))
     print(f"Team IDs: {team_ids}")
     if not team_ids:
         print(f"No matching teams found in organization {org}")
@@ -40,16 +40,26 @@ def set_team_permissions(org, repo, teams, token):
     # Grant permissions to each specified team
     for team_id in team_ids:
         print(f"Granting access to team ID {team_id} for repo {repo}")
-        url = f"{api_base_url}/teams/{team_id}/repos/{org}/{repo}"
-        payload = {
-            "permission": "push"  # Possible values: pull, push, admin
-        }
+        url = f"{api_base_url}/teams/{team_id[0]}/repos/{org}/{repo}"
+        if team_id[1].endswith("1"):
+            payload = {
+                "permission": "push"  # Possible values: pull, push, admin
+            }
+        elif team_id[1].endswith("2"):
+            payload = {
+                "permission": "triage"  # Possible values: pull, push, admin
+            }
+        else:
+            payload = {
+                "permission": "pull"  # Possible values: pull, push, admin
+            }
         response = requests.put(url, headers=headers, json=payload)
         if response.status_code == 204:
             print(f"Granted access to team ID {team_id} for repo {repo}")
         else:
             print(f"Failed to grant access to team ID {team_id}. Error: {response.status_code}, {response.text}")
 
+# set_team_permissions("GitOpsLab-1", "test-repo-13", ["GitOPsLabs 1 Team 1","GitOpsLabs 1 Team 2"], "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")
 
 #Adding INFRA GROUP AND READONLY GROUP. Change the team id when different team.
 #LINE='wso2-enterprise/asgardeo-subscriptions'

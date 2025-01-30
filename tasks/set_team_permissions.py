@@ -59,7 +59,7 @@ def set_team_permissions(org, repo, teams, token):
         else:
             print(f"Failed to grant access to team ID {team_id}. Error: {response.status_code}, {response.text}")
 
-# set_team_permissions("GitOpsLab-1", "test-repo-13", ["GitOPsLabs 1 Team 1","GitOpsLabs 1 Team 2"], "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")
+# set_team_permissions("GitOpsLab-1", "test-repo-13", ["GitOPsLabs 1 Team 1","GitOpsLabs 1 Team 2"], "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xx")
 
 #Adding INFRA GROUP AND READONLY GROUP. Change the team id when different team.
 #LINE='wso2-enterprise/asgardeo-subscriptions'

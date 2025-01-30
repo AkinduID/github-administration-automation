@@ -16,9 +16,6 @@ REQUESTS_FILE = "repo_requests.json"
 
 app = FastAPI()
 
-# GITHUB_TOKEN = "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"
-# GITHUB_API_URL = "https://api.github.com/orgs/Akindu-ID/repos"
-
 class RepoRequest(BaseModel): 
     # General
     email: str

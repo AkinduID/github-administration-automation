@@ -232,7 +232,7 @@
         "functional_head_email": "Integration",
         "requirement": "Test",
         "copy_emails": "we",
-        "repo_name": "test repo 25",
+        "repo_name": "test repo 28",
         "organization": "GitOpsLab-1",
         "repo_type": false,
         "description": "test",
@@ -253,6 +253,7 @@
         "devops_org": "we",
         "devops_project": "we",
         "timestamp": "2025-01-29T15:26:27.469847",
-        "approval_state": "Approved"
+        "approval_state": "Pending"
     }
 ]
+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

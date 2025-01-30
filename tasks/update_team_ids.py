@@ -5,6 +5,10 @@ import requests
 import json
 
 # Function Description: Get the team IDs in an organization and save the data in a JSON file
+# Function nis called once and the data is appended to the JSON file. This is to avoid making multiple API calls.
+# Input Parameters:
+# org: Name of the organization : string
+# token: Personal Access Token : string
 
 FILE_NAME = "teams_data.json"
 
@@ -55,8 +59,6 @@ def get_team_ids(org, token):
     else:
         print(f"Failed to fetch teams. Status code: {response.status_code}")
         exit(1)
-
-
 
 
 # Configuration

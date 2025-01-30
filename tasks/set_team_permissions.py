@@ -1,8 +1,11 @@
 import requests
 
 # Function Description: Set the permissions for the infra team
-
-# when an repo is created list the teams of org and give them relevent permissions
+# Input Parameters:
+# org: Name of the organization : string
+# repo: Name of the repository : string
+# teams: List of teams to be granted access : list
+# token: Personal Access Token : string
 
 # ToDo
 # give different permissions to different teams
@@ -15,7 +18,6 @@ def set_team_permissions(org, repo, teams, token):
     # Read the JSON file
     with open('tasks/teamid_list.json', 'r') as file:
         team_data = json.load(file)
-    
     # Extract team IDs for the specified teams in the given organization
     team_ids = []
     for lab in team_data:
@@ -28,11 +30,8 @@ def set_team_permissions(org, repo, teams, token):
     if not team_ids:
         print(f"No matching teams found in organization {org}")
         return
-
     # GitHub API base URL
     api_base_url = "https://api.github.com"
-    
-    # Headers for authentication
     headers = {
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github+json"
@@ -45,17 +44,11 @@ def set_team_permissions(org, repo, teams, token):
         payload = {
             "permission": "push"  # Possible values: pull, push, admin
         }
-        
         response = requests.put(url, headers=headers, json=payload)
-        
         if response.status_code == 204:
             print(f"Granted access to team ID {team_id} for repo {repo}")
         else:
             print(f"Failed to grant access to team ID {team_id}. Error: {response.status_code}, {response.text}")
-
-# Example usage
-# teams_list = ["GitOPsLabs 1 Team 1", "GitOPsLabs 1 Team 3"]
-# set_team_permissions("GitOpsLab-1", "example-repo", "your_github_token", teams_list)
 
 
 #Adding INFRA GROUP AND READONLY GROUP. Change the team id when different team.

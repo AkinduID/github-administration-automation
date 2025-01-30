@@ -2,6 +2,16 @@ import requests
 import json
 
 # Function Description: Create a new repository in the organization
+# Input Parameters:
+# organization: Name of the organization : string
+# repo_name: Name of the repository : string
+# repo_desc: Description of the repository : string
+# private: True if the repository is private, False if the repository is public : boolean
+# enable_issues: True if issues are enabled, False if issues are disabled : boolean
+# website_url: URL of the website : string
+# token: Personal Access Token : string
+# Return: JSON response of the created repository
+
 
 # ToDO
 # remove team id from the payload done. create separate function in set_infra_teams.py file
@@ -25,7 +35,6 @@ def create_repo(organization, repo_name, repo_desc, private, enable_issues,websi
         "Authorization": f"token {token}",
         "Content-Type": "application/json"
     }
-
     data = {
         "name": repo_name,
         "description": repo_desc,
@@ -38,7 +47,6 @@ def create_repo(organization, repo_name, repo_desc, private, enable_issues,websi
         "gitignore_template": "Java",
         "license_template": "apache-2.0"
     }
-
     response = requests.post(url, headers=headers, data=json.dumps(data))
     if response.status_code == 201:
         print("Repository created successfully.")
@@ -46,6 +54,7 @@ def create_repo(organization, repo_name, repo_desc, private, enable_issues,websi
     else:
         raise Exception(f"Failed to create repository: {response.status_code} - {response.text}")
 
+#################################################################################################################
 
 # GITHUB_TOKEN = "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"
 

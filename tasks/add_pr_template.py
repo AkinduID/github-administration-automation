@@ -2,16 +2,15 @@ import requests
 import base64
 
 # Function Description: Add a pull request template to a GitHub repository
+# Input Parameters:
+# org: Name of the organization : string
+# repo: Name of the repository : string
+# token: Personal Access Token : string
+# branch: The branch to which the template is added (default: 'main') : string
 
 # ToDo
 # - Test Function
 # - Support custom branch input; default to 'main'
-
-# Add a pull request template to a GitHub repository
-# Arguments:
-# repo : Repository in the format 'owner/repo'
-# token : Personal access token for GitHub authentication
-# branch : The branch to which the template is added (default: 'master')
 
 def add_pr_template(org,repo, token, branch="main"):
     url = f"https://api.github.com/repos/{org}/{repo}/contents/pull_request_template.md"
@@ -19,8 +18,6 @@ def add_pr_template(org,repo, token, branch="main"):
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github+json"
     }
-
-    # Pull request template content
     content = """
 ## Purpose
 > Describe the problems, issues, or needs driving this feature/fix and include links to related issues in the following format: Resolves issue1, issue2, etc.
@@ -75,11 +72,7 @@ def add_pr_template(org,repo, token, branch="main"):
 ## Learning
 > Describe the research phase and any blog posts, patterns, libraries, or add-ons you used to solve the problem.
 """
-
-    # Encode the content in Base64
     encoded_content = base64.b64encode(content.encode()).decode()
-
-    # JSON payload
     data = {
         "path": "pull_request_template.md",
         "message": "Add Pull Request Template",
@@ -90,19 +83,14 @@ def add_pr_template(org,repo, token, branch="main"):
         "content": encoded_content,
         "branch": branch
     }
-
-    # Send the PUT request
     response = requests.put(url, headers=headers, json=data)
-
     if response.status_code in [200, 201]:
         print("Pull request template added successfully.")
         return response.json()
     else:
         raise Exception(f"Failed to add pull request template: {response.status_code}, {response.json()}")
 
-# Example usage (replace with actual details when testing):
-# response = add_pr_template("username/repository", "personal_access_token")
-# print(response)
+#################################################################################################################
 
 # GITHUB_TOKEN = "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"
 

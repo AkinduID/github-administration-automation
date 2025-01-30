@@ -131,7 +131,7 @@ elif st.session_state.current_page == "Admin Page":
                     approve_response = requests.post(f"{APPROVE_REQUEST_URL}/{req['repo_name']}")
                     if approve_response.status_code == 200:
                         st.success(f"Request for {req['repo_name']} approved!")
-                        st.experimental_rerun()
+                        st.rerun()
                     else:
                         st.error(f"Failed to approve {req['repo_name']}.")
             st.markdown("---")  # Horizontal line separator

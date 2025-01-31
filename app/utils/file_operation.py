@@ -2,7 +2,7 @@
 import json
 from typing import Any
 
-REQUESTS_FILE = "repo_requests.json"
+REQUESTS_FILE = "app/data/repo_requests.json"
 
 def read_requests() -> list:
     """Reads the repository requests from the JSON file."""

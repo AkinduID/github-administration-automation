@@ -7,7 +7,7 @@ import json
 
 def get_pat(org):
     try:
-        with open('tasks/pat_list.json', 'r') as file:
+        with open('app/data/pat_list.json', 'r') as file:
             pat_list = json.load(file)
         for pat_data in pat_list:
             if org in pat_data:

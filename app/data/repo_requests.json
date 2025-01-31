@@ -1,0 +1,54 @@
+[
+    {
+        "email": "akindu@wso2.com",
+        "functional_head_email": "Integration",
+        "requirement": "12",
+        "copy_emails": "12",
+        "repo_name": "12",
+        "organization": "GitOpsLabs-1",
+        "repo_type": false,
+        "description": "12",
+        "teams": [
+            "GitOpsLabs 3 Team 1"
+        ],
+        "pr_protection": true,
+        "enable_issues": true,
+        "website_url": "12",
+        "topics": [
+            "12"
+        ],
+        "cicd_requirement": "Jenkins Job",
+        "job_type": "product-*",
+        "group_id": "12",
+        "devops_org": "12",
+        "devops_project": "12",
+        "timestamp": "2025-01-31T15:27:25.747281",
+        "approval_state": "Pending"
+    },
+    {
+        "email": "akindu@wso2.com",
+        "functional_head_email": "Integration",
+        "requirement": "33",
+        "copy_emails": "33",
+        "repo_name": "33",
+        "organization": "GitOpsLabs-1",
+        "repo_type": false,
+        "description": "33",
+        "teams": [
+            "GitOpsLabs 2 Team 3"
+        ],
+        "pr_protection": true,
+        "enable_issues": true,
+        "website_url": "33",
+        "topics": [
+            "33"
+        ],
+        "cicd_requirement": "Jenkins Job",
+        "job_type": "carbon-*",
+        "group_id": "33",
+        "devops_org": "33",
+        "devops_project": "33",
+        "timestamp": "2025-01-31T15:27:50.233422",
+        "approval_state": "Pending"
+    }
+]

@@ -3,18 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Local SQL files
-tests/Local MySQL.session.sql
-tests/test.sql
-
 # Sensitive data files in app/data
 app/data/pat_list.json
 app/data/repo_requests.json
 app/data/teamids_list.json
 
-# Sensitive data files in tests/tasks
-tests/tasks/pat_list.json
-tests/tasks/teamid_list.json
-
 # Unwanted simple app folder (in tests)
-tests/simple app/
+tests/

@@ -32,8 +32,11 @@ def approve_request(repo_name: str):
                 raise HTTPException(status_code=400, detail="Request is already processed")
             try:
                 repo_name = request["repo_name"]
+                repo_name = repo_name.replace(" ", "-")
                 organization = request["organization"]
+                organization = organization.replace(" ", "-")
                 GITHUB_TOKEN = get_pat(organization)
+                print(organization, GITHUB_TOKEN)
                 repo_type = request["repo_type"]
                 description = request["description"]
                 pr_protection = request["pr_protection"]
@@ -41,7 +44,7 @@ def approve_request(repo_name: str):
                 website_url = request["website_url"]
                 topics = request["topics"]
                 teams = request["teams"]
-                
+                print(repo_name, organization, GITHUB_TOKEN, repo_type, description, pr_protection, enable_issues, website_url, topics, teams)
                 # Call GitHub operations
                 create_repo(organization, repo_name, description, repo_type, enable_issues, website_url, GITHUB_TOKEN)
                 if topics:

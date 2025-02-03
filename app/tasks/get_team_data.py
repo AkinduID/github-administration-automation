@@ -17,7 +17,7 @@
 import json
 import requests
 
-def fetch_teams_and_save():
+def list_teams():
     # Read pat_list.json
     with open('app/data/pat_list.json', 'r') as file:
         pat_data = json.load(file)
@@ -61,5 +61,5 @@ def fetch_teams_and_save():
     print("teamids_list.json has been created successfully!")
 
 # Run the function
-fetch_teams_and_save()
+# fetch_teams_and_save()
 

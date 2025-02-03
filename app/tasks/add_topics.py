@@ -12,6 +12,7 @@ import requests
 # check url
 
 def add_topics(org, repo, topics, token):
+    print(f"Adding topics to the repository: {org} {repo}, {topics}")
     url = f"https://api.github.com/repos/{org}/{repo}/topics"
     headers = {
         "Accept": "application/vnd.github+json",
@@ -28,11 +29,11 @@ def add_topics(org, repo, topics, token):
 
 #################################################################################################################
 
-# GITHUB_TOKEN = "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"
+# GITHUB_TOKEN = "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xy"
 
 # # Test the function
 # if __name__ == "__main__":
-#     owner = "Akindu-ID"
-#     repo = "test-repo-27"
+#     owner = "GitOpsLab-2"
+#     repo = "test-repo-01"
 #     topics = ["topic1", "topic2"]
 #     add_topics(owner, repo, topics, GITHUB_TOKEN)

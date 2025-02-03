@@ -56,12 +56,12 @@ def create_repo(organization, repo_name, repo_desc, private, enable_issues,websi
 
 #################################################################################################################
 
-# GITHUB_TOKEN = "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"
+# GITHUB_TOKEN = "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xl"
 
 # # Test the function
 # if __name__ == "__main__":
-#     org = "Akindu-ID"
-#     repo_name = "test-repo-27"
+#     org = "GitOpsLab-1"
+#     repo_name = "test-repo-30"
 #     repo_desc = "This is a test repository"
 #     private = False
 #     enable_issues = True

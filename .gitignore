@@ -2,3 +2,4 @@ tasks/pat_list.json
 simple app/
 "simple app"/
 tests/
+app/data/pat_list.json

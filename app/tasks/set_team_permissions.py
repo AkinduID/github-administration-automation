@@ -16,7 +16,7 @@ import requests
 def set_team_permissions(org, repo, teams, token):
     print(f"Setting permissions for teams {teams} in organization {org} for repo {repo}")
     # Read the JSON file
-    with open('app/data/teamid_list.json', 'r') as file:
+    with open('app/data/teamids_list.json', 'r') as file:
         team_data = json.load(file)
     # Extract team IDs for the specified teams in the given organization
     team_ids = []

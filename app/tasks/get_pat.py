@@ -23,7 +23,7 @@ def get_pat(org):
 ########################################################################################
 
 # if __name__ == "__main__":
-#     organization = "GitOpsLab-3"
+#     organization = "GitOpsLab-1"
 #     pat = get_pat(organization)
 #     if pat:
 #         print(f"PAT for {organization}: {pat}")

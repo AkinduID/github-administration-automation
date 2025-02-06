@@ -22,6 +22,9 @@ if st.session_state.current_page == "Normal Page":
     st.title("New Github Repository Request")
 
     with st.form(key='new_repo_form'):
+
+        ####### General Details ###############
+        st.subheader("General Details")
         email = st.text_input("Email *", value="akindu@wso2.com")
         functional_heads_list = [
             "Integration", "Identity Access Management / Asgardeo", "Open Banking", "Choreo",
@@ -30,6 +33,10 @@ if st.session_state.current_page == "Normal Page":
         functional_head_email = st.selectbox('Functional Head:', functional_heads_list)
         requirement = st.text_area("Requirement *", help="Purpose of requesting this repo")
         copy_emails = st.text_input("Copy this email *", help="Comma separated list of emails/groups to inform")
+        st.markdown("---")
+
+        ####### Repo Details #############
+        st.subheader("Repository Details")
         repo_name = st.text_input("Repo Name *", help="Help on repository naming conventions")
         # org_options = [
         #     "wso2", "wso2-support", "wso2-extensions", "wso2-incubator", 
@@ -46,6 +53,14 @@ if st.session_state.current_page == "Normal Page":
         #     "Team *", 
         #     options=["Analytics", "APIM", "Ballerina", "Cellery", "Choreo", "Financial Solutions", "IAM", "Integration", "SRE / WUM", "Other"]
         # )
+        enable_issues_input = st.radio("Enable 'Issues' *", options=["Yes", "No"])
+        website_url = st.text_input("Website URL", help="Provide an URL with more information about the repository")
+        topics = st.text_input("Topics", help="List topics to classify the repo")
+        st.markdown("---")
+
+        ####### Security ##########################
+        st.subheader("Security Details")
+        pr_protection_input = st.radio("Add PR branch protection *", options=["Default Branch protection Rules", "'Ballerina Library' Repo Branch Protection Rules"], help="Select the type of branch protection required")
         teams = st.multiselect(
             "Team *", 
             options=["GitOPsLabs 1 Team 1", "GitOpsLabs 1 Team 2", "GitOpsLabs 1 Team 3", 
@@ -54,11 +69,10 @@ if st.session_state.current_page == "Normal Page":
                      "GitOpsLabs 4 Team 1", "GitOpsLabs 4 Team 2", "GitOpsLabs 4 Team 3",
                      "GitOpsLabs 5 Team 1", "GitOpsLabs 5 Team 2", "GitOpsLabs 5 Team 3"]
         )
-        pr_protection_input = st.radio("Add PR branch protection *", options=["Default Branch protection Rules", "'Ballerina Library' Repo Branch Protection Rules"], help="Select the type of branch protection required")
-        enable_issues_input = st.radio("Enable 'Issues' *", options=["Yes", "No"])
-        website_url = st.text_input("Website URL", help="Provide an URL with more information about the repository")
-        topics = st.text_input("Topics", help="List topics to classify the repo")
+        st.markdown("---")
 
+        ######  CI/CD config #####################################
+        st.subheader("CI/CD Details")
         cicd_requirement = st.radio(
             "CICD requirement", 
             options=["Jenkins Job", "Azure Pipeline", "Not Applicable"],
@@ -82,19 +96,23 @@ if st.session_state.current_page == "Normal Page":
             pr_protection = True if pr_protection_input == "Default Branch protection Rules" else False
             enable_issues = True if enable_issues_input == "Yes" else False
             payload = {
+                ### Greneral
                 "email": email,
                 "functional_head_email": functional_head_email,
                 "requirement": requirement,
                 "copy_emails": copy_emails,
+                ### Repo
                 "repo_name": repo_name,
                 "organization": org,
                 "repo_type": repo_type, #true if "Private" false if "Public", bool
                 "description": description,
-                "teams": teams,
-                "pr_protection": pr_protection, #true if "Default Branch protection Rules" false if "Ballerina Library Repo Branch Protection Rules", bool
                 "enable_issues": enable_issues, #true if "Yes" false if "No", bool
                 "website_url": website_url,
                 "topics": topics.split(",") if topics else [],
+                ## Securitry
+                "pr_protection": pr_protection, #true if "Default Branch protection Rules" false if "Ballerina Library Repo Branch Protection Rules", bool
+                "teams": teams,
+                ## CI/CD
                 "cicd_requirement": cicd_requirement,
                 "job_type": job_type, #if cicd_requirement == "Jenkins Job" else None,
                 "group_id": group_id, #if cicd_requirement == "Jenkins Job" else None,
@@ -122,10 +140,23 @@ elif st.session_state.current_page == "Admin Page":
         requests_list = response.json()
         for req in requests_list:
             st.write(f"### {req['repo_name']}")
-            st.write(f"Email: {req['email']}")
-            st.write(f"Requirement: {req['requirement']}")
+            # st.write(f"Email: {req['email']}")
+            # st.write(f"Requirement: {req['requirement']}")
             st.write(f"Timestamp: {req['timestamp']}")
             st.write(f"Approval State: {req['approval_state']}")
+            st.write(f"Organization: {req['organization']}")
+            st.write(f"Repo Type: {'Private' if req['repo_type'] else 'Public'}")
+            st.write(f"Description: {req['description']}")
+            st.write(f"Teams: {req['teams']}")
+            st.write(f"PR Protection: {'Default Branch protection Rules' if req['pr_protection'] else 'Ballerina Library Repo Branch Protection Rules'}")
+            st.write(f"Enable Issues: {'Yes' if req['enable_issues'] else 'No'}")
+            st.write(f"Website URL: {req['website_url']}")
+            st.write(f"Topics: {req['topics']}")
+            # st.write(f"CICD Requirement: {req['cicd_requirement']}")
+            # st.write(f"Job Type: {req['job_type']}")
+            # st.write(f"Group ID: {req['group_id']}")
+            # st.write(f"DevOps Organization: {req['devops_org']}")
+            # st.write(f"DevOps Project: {req['devops_project']}")
             if req["approval_state"] == "Pending":
                 if st.button(f"Approve {req['repo_name']}",key=f"approve_{req['timestamp']}"):
                     approve_response = requests.post(f"{APPROVE_REQUEST_URL}/{req['repo_name']}")

@@ -12,9 +12,8 @@ import json
 # token: Personal Access Token : string
 # Return: JSON response of the created repository
 
-
 # ToDO
-# remove team id from the payload done. create separate function in set_infra_teams.py file
+# remove team id from the payload done. create separate function in set_infra_teams.py file DONE
 # add url to payload done. set if given else ignore
 
 # Create a new repository in the organization

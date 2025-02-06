@@ -4,8 +4,21 @@ from fastapi import APIRouter, HTTPException
 from app.models.repo import RepoRequest
 from app.utils.file_operation import read_requests, write_requests
 from app.tasks.github_operations import create_repo, add_topics, add_labels, add_issue_template, add_pr_template, add_branch_protection, add_branch_protection_bal, set_team_permissions, get_pat
+import json
 
 router = APIRouter()
+
+@router.get("/get_teams/{organization}")
+def get_teams(organization: str):
+    team_list = []
+    with open('app/data/teamids_list.json', 'r') as file:
+        team_data = json.load(file)
+    for org_data in team_data:
+        if org_data["name"] == organization:
+            for team in org_data["teams"]:
+                team_list.append(team["name"])
+            return team_list
+    raise HTTPException(status_code=404, detail="Organization not found")
 
 @router.post("/create_request")
 def create_request(repo: RepoRequest):
@@ -56,7 +69,10 @@ def approve_request(repo_name: str):
                     add_branch_protection(organization, repo_name, GITHUB_TOKEN)
                 else:
                     add_branch_protection_bal(organization, repo_name, GITHUB_TOKEN)
-                set_team_permissions(organization, repo_name, teams, GITHUB_TOKEN)
+                set_team_permissions(organization, repo_name, teams, GITHUB_TOKEN) 
+                # give admin access to infra team as a default.
+                # read only access to wso2 all
+                # list internal committers teams
                 request["approval_state"] = "Approved"
                 write_requests(requests_list)
             except Exception as e:

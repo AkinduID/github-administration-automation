@@ -36,7 +36,7 @@ def add_branch_protection(org, repo, access_token):
 
 ####################################################################################################################
 
-# GITHUB_TOKEN = "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xx"
+# GITHUB_TOKEN = "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xxxl"
 # # Test the function
 # if __name__ == "__main__":
 #     org = "GitOpsLab-1"

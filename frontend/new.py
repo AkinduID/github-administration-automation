@@ -50,21 +50,7 @@ def prev_step():
 
 # Function to submit the form
 def submit_form():
-    st.success("Form submitted successfully!")
-    st.write("Form Data:", st.session_state.form_data)
-    st.session_state.form_data["repo_type"] = True if st.session_state.form_data["repo_type"] == "Private" else False
-    st.session_state.form_data["enable_issues"] = True if st.session_state.form_data["enable_issues"] == "Yes" else False
-    st.session_state.form_data["pr_protection"] = True if st.session_state.form_data["pr_protection"] == "Default Branch protection Rules" else False
-    st.session_state.form_data["topics"] = st.session_state.form_data["topics"].split(",") if st.session_state.form_data["topics"] else []
-    st.session_state.form_data["enable_triage_wso2all"] = True if st.session_state.form_data["enable_triage_wso2all"] == "Yes" else False
-    st.session_state.form_data["enable_triage_wso2allinterns"] = True if st.session_state.form_data["enable_triage_wso2allinterns"] == "Yes" else False
-    payload = st.session_state.form_data
-    print(payload)
-    response = requests.post(CREATE_REQUEST_URL, json=payload)
-    if response.status_code == 200:
-        st.success(response.json().get("message", "Repository request created successfully"))
-    else:
-        st.error(f"Error: {response.json().get('error', 'Unknown error')}")
+    st.session_state.step = 7
 
 # Progress bar
 progress = st.progress((st.session_state.step - 1) / 6)
@@ -227,5 +213,24 @@ elif st.session_state.step == 6 or (st.session_state.step==5 and st.session_stat
     with col2:
         st.button("Submit", on_click=submit_form)
 
+elif st.session_state.step == 7:
+    st.header("Step 6: Request Submitted")
+    st.session_state.form_data["repo_type"] = True if st.session_state.form_data["repo_type"] == "Private" else False
+    st.session_state.form_data["enable_issues"] = True if st.session_state.form_data["enable_issues"] == "Yes" else False
+    st.session_state.form_data["pr_protection"] = True if st.session_state.form_data["pr_protection"] == "Default Branch protection Rules" else False
+    st.session_state.form_data["topics"] = st.session_state.form_data["topics"].split(",") if st.session_state.form_data["topics"] else []
+    st.session_state.form_data["enable_triage_wso2all"] = True if st.session_state.form_data["enable_triage_wso2all"] == "Yes" else False
+    st.session_state.form_data["enable_triage_wso2allinterns"] = True if st.session_state.form_data["enable_triage_wso2allinterns"] == "Yes" else False
+    payload = st.session_state.form_data
+    print(payload)
+    response = requests.post(CREATE_REQUEST_URL, json=payload)
+    if response.status_code == 200:
+        st.success("Repository request created successfully")
+    else:
+        st.error(f"Error: {response.json().get('error', 'Unknown error')}")
+    st.write("Your request has been submitted successfully!")
+    st.write("Form Data:", st.session_state.form_data)
+    st.write("Please wait for the approval.")
+    st.button("Submit another request", on_click=lambda: st.session_state.clear())
 # Update progress bar
-progress.progress(st.session_state.step / 6)
+progress.progress(st.session_state.step / 7)

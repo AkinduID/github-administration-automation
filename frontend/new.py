@@ -90,12 +90,12 @@ elif st.session_state.step == 2:
     st.header("Step 2: Repository Information")
     st.session_state.form_data['repo_name'] = st.text_input("Repo Name *",value=st.session_state.form_data.get('repo_name', ""), key="repo_name" ,help="Help on repository naming conventions")
     # org_options = [
-        #     "wso2", "wso2-support", "wso2-extensions", "wso2-incubator", 
-        #     "ballerina-platform", "ballerina-guides", "wso2-cellery", "siddhi-io", 
+        #     "wso2", "wso2-extensions", "wso2-incubator", 
+        #     "ballerina-platform", "ballerina-guides", 
         #     "wso2-enterprise", "asgardeo", "choreo-test-apps", "asgardeo-samples", "Other"
         # ]
     org_options = [
-            "GitOpsLab-1", "GitOpsLab-2", "GitOpsLab-3", "GitOpsLab-4", "GitOpsLab-5","wso2-enterprise","wso2-incubator"
+            "gitopslab", "gitopslab-enterprise", "gitopslab-extensions", "GitOpsLab-4", "GitOpsLab-5","wso2-enterprise","wso2-incubator"
         ]
     st.session_state.form_data['organization'] = st.selectbox("Organization *", org_options, index=org_options.index(st.session_state.form_data.get('organization', org_options[0])),
     key="organization")
@@ -117,11 +117,21 @@ elif st.session_state.step == 2:
         st.button("Next", on_click=next_step)
 
 # Step 3: Security Information
-elif st.session_state.step == 3 and st.session_state.form_data['organization'] != "wso2-enterprise":
+elif st.session_state.step == 3 and st.session_state.form_data['organization'] != "gitopslab-enterprise":
     teams = requests.get(f"{GET_TEAMS_URL}/{st.session_state.form_data['organization']}").json()
     print(teams)
     st.header("Step 3: Security Information")
-    st.session_state.form_data['pr_protection'] = st.radio("Add PR branch protection *", options=["Default Branch Protection Rules", "'Ballerina Library' Repo Branch Protection Rules"],index=["Default Branch Protection Rules", "'Ballerina Library' Repo Branch Protection Rules"].index(st.session_state.form_data.get("pr_protection", "Default Branch Protection Rules")),key="pr_protection",help="Select the type of branch protection required")
+    pr_protection_options = ["Default Branch Protection Rules", "'Ballerina Library' Repo Branch Protection Rules"]
+    pr_protection_default_value = st.session_state.form_data.get("pr_protection", "Default Branch Protection Rules")
+    if pr_protection_default_value not in pr_protection_options:
+        default_value = "Default Branch Protection Rules"
+    st.session_state.form_data['pr_protection'] = st.radio(
+        "Add PR branch protection *",
+        options=pr_protection_options,
+        index=pr_protection_options.index(pr_protection_default_value),  # Set the correct index
+        key="pr_protection",
+        help="Select the type of branch protection required")
+    # st.session_state.form_data['pr_protection'] = st.radio("Add PR branch protection *", options=["Default Branch Protection Rules", "'Ballerina Library' Repo Branch Protection Rules"],index=["Default Branch Protection Rules", "'Ballerina Library' Repo Branch Protection Rules"].index(st.session_state.form_data.get("pr_protection", "Default Branch Protection Rules")),key="pr_protection",help="Select the type of branch protection required")
     st.session_state.form_data['teams'] = st.multiselect("Team *", options=teams,key="teams")
     st.session_state.form_data['enable_triage_wso2all']=""
     st.session_state.form_data['enable_triage_wso2allinterns']=""
@@ -132,7 +142,7 @@ elif st.session_state.step == 3 and st.session_state.form_data['organization'] !
     with col2:
         st.button("Next", on_click=next_step)
 
-elif st.session_state.step == 3 and st.session_state.form_data['organization'] == "wso2-enterprise":
+elif st.session_state.step == 3 and st.session_state.form_data['organization'] == "gitopslab-enterprise":
     st.header("Step 3: Security Information")
     teams = requests.get(f"{GET_TEAMS_URL}/{st.session_state.form_data['organization']}").json()
     print(teams)

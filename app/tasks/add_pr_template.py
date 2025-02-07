@@ -12,7 +12,7 @@ import base64
 # - Test Function
 # - Support custom branch input; default to 'main'
 
-def add_pr_template(org,repo, token, branch="main"):
+def add_pr_template(org,repo, token):
     url = f"https://api.github.com/repos/{org}/{repo}/contents/pull_request_template.md"
     headers = {
         "Authorization": f"token {token}",
@@ -81,7 +81,7 @@ def add_pr_template(org,repo, token, branch="main"):
             "email": "akindu@wso2.com"
         },
         "content": encoded_content,
-        "branch": branch
+        "branch": "main"
     }
     response = requests.put(url, headers=headers, json=data)
     if response.status_code in [200, 201]:

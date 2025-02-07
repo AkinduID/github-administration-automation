@@ -10,10 +10,9 @@ import base64
 
 # ToDo
 # Test Function
-# Support custom branch input; default to 'main'
 
 
-def add_issue_template(org,repo, token, branch="main"):
+def add_issue_template(org,repo, token):
     url = f"https://api.github.com/repos/{org}/{repo}/contents/issue_template.md"
     headers = {
         "Authorization": f"token {token}",
@@ -49,7 +48,7 @@ def add_issue_template(org,repo, token, branch="main"):
             "email": "akindu@wso2.com"
         },
         "content": encoded_content,
-        "branch": branch
+        "branch": "main"
     }
     response = requests.put(url, headers=headers, json=data)
     if response.status_code == 201:

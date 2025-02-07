@@ -7,6 +7,7 @@ __pycache__/
 app/data/pat_list.json
 app/data/repo_requests.json
 app/data/teamids_list.json
+app/data/repo_requests_new.json
 
 # Unwanted simple app folder (in tests)
 tests/

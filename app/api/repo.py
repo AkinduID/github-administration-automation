@@ -3,7 +3,7 @@ from datetime import datetime
 from fastapi import APIRouter, HTTPException
 from app.models.repo import RepoRequest
 from app.utils.file_operation import read_requests, write_requests
-from app.tasks.github_operations import create_repo, add_topics, add_labels, add_issue_template, add_pr_template, add_branch_protection, add_branch_protection_bal, set_team_permissions, get_pat
+from app.tasks.github_operations import create_repo, add_topics, add_labels, add_issue_template, add_pr_template, add_branch_protection, add_branch_protection_bal, set_team_permissions, set_team_permissions_ent, get_pat
 import json
 
 router = APIRouter()
@@ -16,7 +16,8 @@ def get_teams(organization: str):
     for org_data in team_data:
         if org_data["name"] == organization:
             for team in org_data["teams"]:
-                team_list.append(team["name"])
+                if team["name"].endswith("-internal-commiters"):
+                    team_list.append(team["name"]) 
             return team_list
     raise HTTPException(status_code=404, detail="Organization not found")
 
@@ -57,6 +58,8 @@ def approve_request(repo_name: str):
                 website_url = request["website_url"]
                 topics = request["topics"]
                 teams = request["teams"]
+                enable_triage_wso2all = request["enable_triage_wso2all"]
+                enable_triage_wso2allinterns = request["enable_triage_wso2allinterns"]
                 print(repo_name, organization, GITHUB_TOKEN, repo_type, description, pr_protection, enable_issues, website_url, topics, teams)
                 # Call GitHub operations
                 create_repo(organization, repo_name, description, repo_type, enable_issues, website_url, GITHUB_TOKEN)
@@ -69,10 +72,10 @@ def approve_request(repo_name: str):
                     add_branch_protection(organization, repo_name, GITHUB_TOKEN)
                 else:
                     add_branch_protection_bal(organization, repo_name, GITHUB_TOKEN)
-                set_team_permissions(organization, repo_name, teams, GITHUB_TOKEN) 
-                # give admin access to infra team as a default.
-                # read only access to wso2 all
-                # list internal committers teams
+                if request["organization"] == "gitopslab-enterprise":
+                    set_team_permissions_ent(organization, repo_name, teams, enable_triage_wso2all,enable_triage_wso2allinterns, GITHUB_TOKEN) 
+                else:
+                    set_team_permissions(organization, repo_name, teams, GITHUB_TOKEN) 
                 request["approval_state"] = "Approved"
                 write_requests(requests_list)
             except Exception as e:

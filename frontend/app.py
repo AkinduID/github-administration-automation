@@ -23,7 +23,7 @@ if st.session_state.current_page == "Normal Page":
 
     with st.form(key='new_repo_form'):
 
-        ####### General Details ###############
+        ####### General Details ##############
         st.subheader("General Details")
         email = st.text_input("Email *", value="akindu@wso2.com")
         functional_heads_list = [
@@ -39,8 +39,8 @@ if st.session_state.current_page == "Normal Page":
         st.subheader("Repository Details")
         repo_name = st.text_input("Repo Name *", help="Help on repository naming conventions")
         # org_options = [
-        #     "wso2", "wso2-support", "wso2-extensions", "wso2-incubator", 
-        #     "ballerina-platform", "ballerina-guides", "wso2-cellery", "siddhi-io", 
+        #     "wso2", "wso2-extensions", "wso2-incubator", 
+        #     "ballerina-platform", "ballerina-guides",
         #     "wso2-enterprise", "asgardeo", "choreo-test-apps", "asgardeo-samples", "Other"
         # ]
         org_options = [

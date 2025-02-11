@@ -1,16 +1,11 @@
-schemaVersion: 1.0
+schemaVersion: "1.1"
 endpoints:
-  - name: todolist-endpoint  # A descriptive name
-    service:
-      port: 8080        # The port your service listens on
-    type: REST          # The type of endpoint (REST, GraphQL, etc.)
-
-# If you have specific build instructions (e.g., for a Dockerfile, you would specify that here)
-build:
-  buildpack: python # Example assuming Python project. Change according to project type
-  python:
-    projectDirectory: . # Assuming your project root is the source root. Change if needed.
-# If your service exposes its API documentation via OpenAPI/Swagger
-openapi:
-  filePath: openapi.json # Path to your OpenAPI file from project root
-# Other configurations can be added as needed.
+    - name: automated-github-repository-creation
+      displayName: automated-github-repository-creation
+      service:
+        basePath: /
+        port: 8080
+      type: REST
+      networkVisibilities:
+        - Public
+      schemaFilePath: .

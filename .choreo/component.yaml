@@ -3,9 +3,9 @@ endpoints:
     - name: automated-github-repository-creation
       displayName: automated-github-repository-creation
       service:
-        basePath: /
+        basePath: app/
         port: 8080
       type: REST
       networkVisibilities:
         - Public
-      schemaFilePath: openapi.json
+      schemaFilePath: app/openapi.json

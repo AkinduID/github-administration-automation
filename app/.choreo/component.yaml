@@ -12,5 +12,5 @@ build:
     projectDirectory: . # Assuming your project root is the source root. Change if needed.
 # If your service exposes its API documentation via OpenAPI/Swagger
 openapi:
-  filePath: openapi.yaml  # Path to your OpenAPI file from project root
+  filePath: openapi.json # Path to your OpenAPI file from project root
 # Other configurations can be added as needed.

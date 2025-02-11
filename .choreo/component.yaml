@@ -3,7 +3,7 @@ endpoints:
     - name: automated-github-repository-creation
       displayName: automated-github-repository-creation
       service:
-        basePath: app/
+        basePath: /app
         port: 8080
       type: REST
       networkVisibilities:

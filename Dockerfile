@@ -1,7 +1,7 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11
 
-# Create a non-root user and group
+# Create a non-root user with a UID between 10000 and 20000
 RUN groupadd -g 10001 appgroup && \
     useradd -m -u 10001 -g appgroup appuser
 
@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set the user to the non-root user
-USER appuser
+USER 10001
 
 # Expose the port FastAPI runs on
 EXPOSE 8080

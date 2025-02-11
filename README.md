@@ -8,7 +8,9 @@
 
 ## Project Overview
 This project automates the creation of repositories within different organizations, reducing manual effort and ensuring consistency. Currently, the following organizations are used for testing.
-* [GitOpsLab-1](https://github.com/GitOpsLab-1)
+* [gitopslab](https://github.com/gitopslab)
+* [gitopslab-enterprise](https://github.com/gitopslab-enterprise)
+* [gitopslab-extensions](https://github.com/gitopslab-extensions)
 
 
 ## Workflow

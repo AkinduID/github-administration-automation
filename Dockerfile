@@ -2,8 +2,8 @@
 FROM python:3.11
 
 # Create a non-root user and group
-RUN groupadd -g 1001 appgroup && \
-    useradd -m -u 1001 -g appgroup appuser
+RUN groupadd -g 10001 appgroup && \
+    useradd -m -u 10001 -g appgroup appuser
 
 # Set the working directory in the container
 WORKDIR /app

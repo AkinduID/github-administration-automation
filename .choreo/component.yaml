@@ -1,11 +1,19 @@
-schemaVersion: "1.1"
+# schemaVersion: "1.1"
+# endpoints:
+#     - name: automated-github-repository-creation
+#       displayName: automated-github-repository-creation
+#       service:
+#         basePath: app/
+#         port: 8080
+#       type: REST
+#       networkVisibilities:
+#         - Public
+#       schemaFilePath: app/openapi.json
+
+schemaVersion: 1.0 
+ # Example endpoint configuration
 endpoints:
-    - name: automated-github-repository-creation
-      displayName: automated-github-repository-creation
-      service:
-        basePath: app/
-        port: 8080
-      type: REST
-      networkVisibilities:
-        - Public
-      schemaFilePath: app/openapi.json
+- name: my-service-endpoint
+  service:
+     port: <SERVICE_PORT>
+  type: REST

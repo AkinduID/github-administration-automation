@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# virtual environment
+venv/
+
 # Sensitive data files in app/data
 app/data/pat_list.json
 app/data/repo_requests.json

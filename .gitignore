@@ -8,6 +8,7 @@ app/data/pat_list.json
 app/data/repo_requests.json
 app/data/teamids_list.json
 app/data/repo_requests_new.json
+app/utils/email_operations.py
 
 # Unwanted simple app folder (in tests)
 tests/

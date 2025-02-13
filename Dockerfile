@@ -20,6 +20,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the project files into the container
 COPY . .
 
+# Ensure /app/data exists and has the correct ownership and permissions
+RUN mkdir -p /app/data && \
+    chown -R appuser:appgroup /app/data && \
+    chmod -R 775 /app/data
+
 # Set the user to the non-root user
 USER 10001
 

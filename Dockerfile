@@ -23,7 +23,7 @@ COPY . .
 # Ensure /app/data exists and has the correct ownership and permissions
 RUN mkdir -p /app/data && \
     chown -R appuser:appgroup /app/data && \
-    chmod -R 775 /app/data
+    chmod -R 777 /app/data
 
 # Set the user to the non-root user
 USER 10001
